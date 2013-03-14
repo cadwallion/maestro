@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'thor'
+require 'maestro'
+
+module Maestro
+  class CLI < Thor
+    include Thor::Actions
+
+    desc 'add', "Adds an application to Maestro"
+    method_option :type, default: "unicorn", aliases: '-app', desc: 'App server type (unicorn, thin, etc)'
+    def add name
+      org_name, project_name = name.split("/")
+      bootstrap = Bootstrap.new project_name, org_name, type: options[:type].to_sym
+      puts "Adding nginx conf for #{project_name}.#{org_name}.dev..."
+      bootstrap.nginx_config
+      puts "Adding /etc/hosts line for #{project_name}.#{org_name}.dev..."
+      bootstrap.add_dns
+      puts "Adding #{options[:type]} config to Maestro startup scripts..."
+      bootstrap.add_foreman_line
+      puts "Done! You may start this app with `maestro start articulate.codename`."
+    end
+
+    desc 'start', "Starts an application using Foreman"
+    def start name
+      IO.popen("foreman start #{name} -f ~/.maestro", 'r+') do |process|
+        process.close_write
+        puts process.gets until process.eof?
+      end
+    end
+  end
+end
+
+Maestro::CLI.start
