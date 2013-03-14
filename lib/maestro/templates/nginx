@@ -1,4 +1,4 @@
-upstream UPSTREAM_NAME_app {
+upstream UPSTREAM_NAME {
   server unix:DIRECTORY/tmp/sockets/development.sock fail_timeout=0;
 }
 

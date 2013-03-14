@@ -11,7 +11,7 @@ module Maestro
     def nginx_config
       template = File.read File.dirname(__FILE__) + '/templates/nginx'
       template.sub! /SERVER_NAME/, server_name
-      template.gsub! /DIRECTORY/, "#{root_directory}/public"
+      template.gsub! /DIRECTORY/, "#{root_directory}"
       template.gsub! /UPSTREAM_NAME/, "#{project_name}_app"
       File.write "/usr/local/etc/nginx/sites-available/#{domain}", template
       FileUtils.ln_sf "/usr/local/etc/nginx/sites-available/#{domain}", "/usr/local/etc/nginx/sites-enabled/#{domain}"
