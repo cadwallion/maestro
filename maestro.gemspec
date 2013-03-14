@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Maestro::VERSION
   gem.authors       = ["Andrew Nordman"]
   gem.email         = ["cadwallion@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Simplify development servers without the magic}
+  gem.summary       = %q{Simplified generators for development servers with foreman-backed app startup}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
