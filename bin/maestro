@@ -24,7 +24,8 @@ module Maestro
 
     desc 'start', "Starts an application using Foreman"
     def start name
-      IO.popen("foreman start #{name} -f ~/.maestro", 'r+') do |process|
+      app_directory = "#{ENV['PROJECTS']}/#{name.sub(/[\._]/, '/')}"
+      IO.popen("foreman start #{name.sub('.', '_')} -f ~/.maestro -d #{app_directory}", 'r+') do |process|
         process.close_write
         puts process.gets until process.eof?
       end

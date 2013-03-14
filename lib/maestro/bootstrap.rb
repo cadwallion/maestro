@@ -29,7 +29,7 @@ module Maestro
 
     def add_foreman_line
       sheet_music = read_maestro_sheet
-      sheet_music << "#{org_name}.#{project_name}: cd #{root_directory} && #{startup_line}\n"
+      sheet_music << "#{org_name}_#{project_name}: #{startup_line}\n"
       File.write File.expand_path("~/.maestro"), sheet_music
     end
 
