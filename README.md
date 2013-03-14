@@ -1,6 +1,6 @@
 # Maestro
 
-TODO: Write a gem description
+A gem designed to easily setup and startup reverse-proxied Rack apps.  Uses foreman to start apps.
 
 ## Installation
 
@@ -18,7 +18,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Maestro comes with two commands: `maestro add` and `maestro start`.
+
+### add
+
+`maestro add ORGANIZATION/PROJECT`
+
+This adds a `project.organization.dev` DNS entry to /etc/hosts, adds an nginx configuration, and a foreman entry
+in a custom Procfile for all managed Maestro sheets.  The system assumes a ORGANIZATION/PROJECT structure held 
+within a directory specified by `ENV['PROJECTS']`.  Therefore, if it is set to `/Users/cadwallion/code`, the root
+is `/Users/cadwallion/code/ORGANIZATION/PROJECT`.
+
+`maestro start project.organization`
+
+This starts the `PROJECT.ORGAINZATION` application using Foreman.  It reads the Procfile found at ~/.maestro and
+attempts to start the app server up.  The app server type passed will determine what values are being written in
+the Procfile.
 
 ## Contributing
 

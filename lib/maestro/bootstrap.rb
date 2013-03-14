@@ -38,7 +38,7 @@ module Maestro
     end
 
     def root_directory
-      "/Users/cadwallion/code/#{org_name}/#{project_name}"
+      File.expand_path "#{ENV['PROJECTS']}/#{org_name}/#{project_name}"
     end
 
     def domain
