@@ -58,9 +58,9 @@ module Maestro
     def startup_line
       case app_type
       when :thin
-        "thin start -S tmp/sockets/development.sock -P tmp/pids/development.pid"
+        "bundle exec thin start -S tmp/sockets/development.sock -P tmp/pids/development.pid"
       when :unicorn
-        "unicorn_rails -c config/unicorn.rb"
+        "bundle exec unicorn_rails -c config/unicorn.rb"
       end
     end
   end
