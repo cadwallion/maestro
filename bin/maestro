@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'bundler/setup'
+$: << File.dirname(__FILE__) + '/../lib'
 require 'thor'
-require 'maestro'
 
 module Maestro
   class CLI < Thor
@@ -25,10 +24,10 @@ module Maestro
     desc 'start', "Starts an application using Foreman"
     def start name
       app_directory = "#{ENV['PROJECTS']}/#{name.sub(/[\._]/, '/')}"
-      IO.popen("foreman start #{name.sub('.', '_')} -f ~/.maestro -d #{app_directory}", 'r+') do |process|
-        process.close_write
-        puts process.gets until process.eof?
-      end
+      r, w = IO.pipe
+      Process.spawn "foreman start #{name} -f ~/.maestro -d #{app_directory} -c", out: w
+      w.close
+      puts r.gets until r.eof?
     end
   end
 end
