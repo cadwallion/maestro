@@ -29,11 +29,14 @@ in a custom Procfile for all managed Maestro sheets.  The system assumes a ORGAN
 within a directory specified by `ENV['PROJECTS']`.  Therefore, if it is set to `/Users/cadwallion/code`, the root
 is `/Users/cadwallion/code/ORGANIZATION/PROJECT`.
 
-`maestro start project.organization`
 
-This starts the `PROJECT.ORGAINZATION` application using Foreman.  It reads the Procfile found at ~/.maestro and
+### start
+
+`maestro start ORGANIZATION_PROJECT`
+
+This starts the `PROJECT.ORGANIZATION` application using Foreman.  It reads the Procfile found at ~/.maestro and
 attempts to start the app server up.  The app server type passed will determine what values are being written in
-the Procfile.
+the Procfile.  To customize the startup script, edit `~/.maestro` with your changes.
 
 ## Contributing
 
