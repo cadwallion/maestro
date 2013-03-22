@@ -57,6 +57,8 @@ module Maestro
         "bundle exec thin start -S tmp/sockets/development.sock -P tmp/pids/development.pid"
       when :unicorn
         "bundle exec unicorn_rails -c config/unicorn.rb"
+      when :rackup
+        "rackup config.ru"
       end
     end
   end
