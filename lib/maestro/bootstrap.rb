@@ -20,10 +20,8 @@ module Maestro
     def add_dns
       dns = File.read "/etc/hosts"
       dns.sub! /127.0.0.1\t(.*)\n/, "127.0.0.1\t\1 #{server_name}\n"
-      if File.writable? "/etc/hosts"
-        File.write "/etc/hosts", dns
-      else
-        puts "[WARNING] Cannot write to /etc/hosts, please add #{domain} to 127.0.0.1 entry in /etc/hosts!"
+      IO.popen "sudo echo '#{dns}' > /etc/hosts" do |process|
+        puts process.gets until process.eof?
       end
     end
 
@@ -44,8 +42,6 @@ module Maestro
     def domain
       "#{project_name}.#{org_name}"
     end
-
-
 
     def read_maestro_sheet
       if File.exists? File.expand_path "~/.maestro"
