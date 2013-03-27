@@ -33,6 +33,19 @@ module Maestro
       File.write File.expand_path("~/.maestro"), sheet_music
     end
 
+    def add_resolver
+      if !File.exists? '/etc/resolver'
+        FileUtils.mkdir '/etc/resolver'
+      end
+
+      IO.popen "sudo -i", 'r+' do |process|
+        process.puts "echo 'nameserver 127.0.0.1' > /etc/resolver/#{project_name}.#{org_name}.dev"
+        process.puts 'exit'
+        process.close_write
+        puts process.gets until process.eof?
+      end
+    end
+
     def server_name
       "#{domain}.dev"
     end
