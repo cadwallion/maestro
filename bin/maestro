@@ -2,6 +2,7 @@
 
 $: << File.dirname(__FILE__) + '/../lib'
 require 'thor'
+require 'maestro'
 
 module Maestro
   class CLI < Thor
@@ -14,8 +15,6 @@ module Maestro
       bootstrap = Bootstrap.new project_name, org_name, type: options[:type].to_sym
       puts "Adding nginx conf for #{project_name}.#{org_name}.dev..."
       bootstrap.nginx_config
-      puts "Adding /etc/hosts line for #{project_name}.#{org_name}.dev..."
-      bootstrap.add_dns
       puts "Adding #{options[:type]} config to Maestro startup scripts..."
       bootstrap.add_foreman_line
       puts "Done! You may start this app with `maestro start articulate.codename`."

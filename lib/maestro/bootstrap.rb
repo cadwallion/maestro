@@ -27,14 +27,6 @@ module Maestro
       FileUtils.ln_sf "/usr/local/etc/nginx/sites-available/#{domain}", "/usr/local/etc/nginx/sites-enabled/#{domain}"
     end
 
-    def add_dns
-      dns = File.read "/etc/hosts"
-      dns.sub! /127.0.0.1\t(.*)\n/, "127.0.0.1\t\1 #{server_name}\n"
-      IO.popen "sudo echo '#{dns}' > /etc/hosts" do |process|
-        puts process.gets until process.eof?
-      end
-    end
-
     def add_foreman_line
       sheet_music = read_maestro_sheet
       sheet_music << "#{org_name}_#{project_name}: #{startup_line}\n"
