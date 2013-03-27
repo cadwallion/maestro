@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Maestro
   class Bootstrap
     attr_reader :project_name, :org_name, :app_type
@@ -13,6 +15,14 @@ module Maestro
       template.sub! /SERVER_NAME/, server_name
       template.gsub! /DIRECTORY/, "#{root_directory}"
       template.gsub! /UPSTREAM_NAME/, "#{project_name}_app"
+      if !File.exist? "/usr/local/etc/nginx/sites-available/"
+        FileUtils.mkdir "/usr/local/etc/nginx/sites-available"
+      end
+
+      if !File.exist? "/usr/local/etc/nginx/sites-enabled/"
+        FileUtils.mkdir "/usr/local/etc/nginx/sites-enabled"
+      end
+
       File.write "/usr/local/etc/nginx/sites-available/#{domain}", template
       FileUtils.ln_sf "/usr/local/etc/nginx/sites-available/#{domain}", "/usr/local/etc/nginx/sites-enabled/#{domain}"
     end
