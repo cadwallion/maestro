@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'maestro/nginx_configurator'
 
 module Maestro
   class Bootstrap
@@ -8,23 +9,11 @@ module Maestro
       @project_name = project_name
       @org_name = org_name
       @app_type = options[:type]
+      @nginx_config = NginxConfigurator.new
     end
 
-    def nginx_config
-      template = File.read File.dirname(__FILE__) + '/templates/nginx'
-      template.sub! /SERVER_NAME/, server_name
-      template.gsub! /DIRECTORY/, "#{root_directory}"
-      template.gsub! /UPSTREAM_NAME/, "#{project_name}_app"
-      if !File.exist? "/usr/local/etc/nginx/sites-available/"
-        FileUtils.mkdir "/usr/local/etc/nginx/sites-available"
-      end
-
-      if !File.exist? "/usr/local/etc/nginx/sites-enabled/"
-        FileUtils.mkdir "/usr/local/etc/nginx/sites-enabled"
-      end
-
-      File.write "/usr/local/etc/nginx/sites-available/#{domain}", template
-      FileUtils.ln_sf "/usr/local/etc/nginx/sites-available/#{domain}", "/usr/local/etc/nginx/sites-enabled/#{domain}"
+    def add_nginx_vhost
+      @nginx_config.add_vhost_for server_name, app_directory
     end
 
     def add_foreman_line
