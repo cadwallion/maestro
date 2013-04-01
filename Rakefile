@@ -1,6 +1,4 @@
 require "bundler/gem_tasks"
-require 'rspec/task'
-
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec) do |spec|
@@ -8,4 +6,4 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.rspec_opts = ['--backtrace']
 end
 
-rake default: :spec
+task default: :spec
