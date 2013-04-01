@@ -16,7 +16,7 @@ module Maestro
       puts "Adding nameserver resolution to /etc/resolver..."
       bootstrap.add_resolver
       puts "Adding nginx conf for #{project_name}.#{org_name}.dev..."
-      bootstrap.nginx_config
+      bootstrap.add_nginx_vhost
       puts "Adding #{options[:type]} config to Maestro startup scripts..."
       bootstrap.add_foreman_line
       puts "Done! You may start this app with `maestro start articulate.codename`."
