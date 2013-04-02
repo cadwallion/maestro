@@ -1,4 +1,4 @@
-# Maestro
+# Maestro [![Build Status](https://travis-ci.org/cadwallion/maestro.png?branch=master)](https://travis-ci.org/cadwallion/maestro) [![Code Climate](https://codeclimate.com/github/cadwallion/maestro.png)](https://codeclimate.com/github/cadwallion/maestro)
 
 A gem designed to easily setup and startup reverse-proxied Rack apps.  Uses foreman to start apps.
 
