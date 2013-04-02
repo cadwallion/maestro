@@ -13,7 +13,7 @@ module Maestro
     end
 
     def add_nginx_vhost
-      @nginx_config.add_vhost_for server_name, app_directory
+      @nginx_config.add_vhost_for server_name, root_directory
     end
 
     def add_foreman_line

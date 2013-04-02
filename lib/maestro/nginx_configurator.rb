@@ -45,11 +45,11 @@ module Maestro
       config_file.close
     end
 
-    def generate_vhost_from_template
+    def generate_vhost_from_template server_name, root_directory
       template = File.read nginx_template
       template.sub! /SERVER_NAME/, server_name
       template.gsub! /DIRECTORY/, root_directory
-      template.gsub! /UPSTREAM_NAME/, "#{project_name}_app"
+      template.gsub! /UPSTREAM_NAME/, "#{server_name.gsub('.','_')}_app"
 
       template
     end
